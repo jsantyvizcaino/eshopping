@@ -1,0 +1,11 @@
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\bin\Debug\net6.0\Basket.Core.deps.json
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\bin\Debug\net6.0\Basket.Core.dll
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\bin\Debug\net6.0\Basket.Core.pdb
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.AssemblyInfoInputs.cache
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.AssemblyInfo.cs
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.csproj.CoreCompileInputs.cache
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.dll
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\refint\Basket.Core.dll
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\Basket.Core.pdb
+D:\santy\CURSOS\.NET\.NET 6\Microservices\EShopping\Services\Basket\Basket.Core\obj\Debug\net6.0\ref\Basket.Core.dll
