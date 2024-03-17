@@ -26,7 +26,13 @@ public class GetDiscountQueryHandler : IRequestHandler<GetDiscountQuery, CouponM
         if(coupon is null)
             throw new RpcException(new Status(StatusCode.NotFound,$"Descuento con el nombre de producto {request.ProductName} no se ha encontrado"));
 
-        var couponModel = _mapper.Map<CouponModel>(coupon);
+        var couponModel = new CouponModel
+        {
+            Id = coupon.Id,
+            Amount = coupon.Amount,
+            Description = coupon.Description,
+            ProductName = coupon.ProductName
+        };
         return couponModel;
     }
 }
