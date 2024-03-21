@@ -12,8 +12,8 @@ internal class ProductContextSeed
         string path = Path.Combine("Data", "SeedData", "products.json");
         if (!checkProducts)
         {
-            //var productsData = File.ReadAllText(path);
-            var productsData = File.ReadAllText("../Catalogo.Infrestructure/Data/SeedData/products.json");
+            var productsData = File.ReadAllText(path);
+            //var productsData = File.ReadAllText("../Catalogo.Infrestructure/Data/SeedData/products.json");
             var products = JsonSerializer.Deserialize<List<Product>>(productsData);
             if (products is not null)
             {
