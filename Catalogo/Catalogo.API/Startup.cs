@@ -4,7 +4,10 @@ using Catalogo.Infrestructure.Data;
 using Catalogo.Infrestructure.Repositories;
 using HealthChecks.UI.Client;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -21,7 +24,7 @@ namespace Catalogo.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            //services.AddControllers();
             services.AddApiVersioning();
             services.AddHealthChecks()
                 .AddMongoDb(Configuration["DatabaseSettings:ConnectionString"],"Catalog Mongo Db Health Check",HealthStatus.Degraded);
@@ -35,6 +38,20 @@ namespace Catalogo.API
             services.AddScoped<IProductRepository,ProductRepository>();
             services.AddScoped<IBrandRepository, ProductRepository>();
             services.AddScoped<ITypesRepository, ProductRepository>();
+
+            //Identity server
+            var userPolicy= new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            services.AddControllers(config => {
+                config.Filters.Add(new AuthorizeFilter(userPolicy));
+                });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt=>
+                {
+                    opt.Authority = "https://localhost:9009";
+                    opt.Audience = "Catalog";
+                });
 
 
 
@@ -50,6 +67,7 @@ namespace Catalogo.API
             }
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseStaticFiles();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => {

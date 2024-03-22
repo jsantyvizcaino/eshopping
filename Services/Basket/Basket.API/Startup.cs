@@ -6,7 +6,10 @@ using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using MassTransit;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -24,7 +27,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddControllers();
+        //services.AddControllers();
         services.AddApiVersioning();
         //Redis registration - settings
         services.AddStackExchangeRedisCache(op =>
@@ -38,12 +41,12 @@ public class Startup
         //Grpc registration
         services.AddScoped<DiscountGrpcService>();
         services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
-            o=>o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"]));
+            o => o.Address = new Uri(Configuration["GrpcSettings:DiscountUrl"]));
 
         services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" }); });
 
         services.AddHealthChecks()
-            .AddRedis(Configuration["CacheSettings:ConnectionString"],"Redis Health",HealthStatus.Degraded);
+            .AddRedis(Configuration["CacheSettings:ConnectionString"], "Redis Health", HealthStatus.Degraded);
         services.AddMassTransit(config =>
         {
             config.UsingRabbitMq((ct, cfg) =>
@@ -53,6 +56,20 @@ public class Startup
         });
 
         services.AddMassTransitHostedService();
+
+        //Identity server
+        var userPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        services.AddControllers(config =>
+        {
+            config.Filters.Add(new AuthorizeFilter(userPolicy));
+        });
+
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.Authority = "https://localhost:9009";
+                opt.Audience = "Basket";
+            });
 
     }
 
@@ -67,8 +84,10 @@ public class Startup
 
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseAuthentication();
         app.UseAuthorization();
-        app.UseEndpoints(endpoints => {
+        app.UseEndpoints(endpoints =>
+        {
             endpoints.MapControllers();
             endpoints.MapHealthChecks("/health", new HealthCheckOptions()
             {
