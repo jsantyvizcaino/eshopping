@@ -42,16 +42,9 @@ namespace Catalogo.API
             //Identity server
             var userPolicy= new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
-            services.AddControllers(config => {
-                config.Filters.Add(new AuthorizeFilter(userPolicy));
-                });
+            services.AddControllers();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt=>
-                {
-                    opt.Authority = "https://localhost:9009";
-                    opt.Audience = "Catalog";
-                });
+            services.AddAuthentication();
 
 
 

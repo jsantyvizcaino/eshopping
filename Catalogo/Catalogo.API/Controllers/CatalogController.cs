@@ -12,9 +12,12 @@ public class CatalogController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public CatalogController(IMediator mediator)
+    public readonly ILogger<CatalogController> _logger;
+
+    public CatalogController(IMediator mediator, ILogger<CatalogController> logger)
     {
         _mediator = mediator;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -42,9 +45,19 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(IList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<ActionResult<IList<ProductResponse>>> GetAllProducts([FromQuery] CatologSpecParams catologSpecParams)
     {
-        var query = new GetAllProductsQuery(catologSpecParams);
-        var result = await _mediator.Send(query);
-        return Ok(result);
+        try
+        {
+            var query = new GetAllProductsQuery(catologSpecParams);
+            var result = await _mediator.Send(query);
+            _logger.LogInformation("All products retrivued");
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Exception has occured: {Exception}");
+            throw;
+        }
+      
     }
     
     [HttpGet]
