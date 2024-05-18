@@ -2,6 +2,7 @@
 using Basket.Application.GrpcService;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
+using Common.Logging.Correlation;
 using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using MassTransit;
@@ -37,6 +38,7 @@ public class Startup
 
         services.AddMediatR(typeof(CreateShoppingCartCommandHandler).GetTypeInfo().Assembly);
         services.AddScoped<IBasketRepository, BasketRepository>();
+        services.AddScoped<ICorrelationIdGenerator, CorrelationIdGenerator>();
         services.AddAutoMapper(typeof(Startup));
         //Grpc registration
         services.AddScoped<DiscountGrpcService>();
@@ -58,18 +60,10 @@ public class Startup
         services.AddMassTransitHostedService();
 
         //Identity server
-        var userPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-        services.AddControllers(config =>
-        {
-            config.Filters.Add(new AuthorizeFilter(userPolicy));
-        });
+        //var userPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+        services.AddControllers();
 
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(opt =>
-            {
-                opt.Authority = "https://localhost:9009";
-                opt.Audience = "Basket";
-            });
+        services.AddAuthentication();
 
     }
 

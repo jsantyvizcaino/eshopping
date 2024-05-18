@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Catalogo.Application.Commands;
 using Catalogo.Core.Specification;
+using Common.Logging.Correlation;
 
 namespace Catalogo.API.Controllers;
 
@@ -13,11 +14,14 @@ public class CatalogController : ApiController
     private readonly IMediator _mediator;
 
     public readonly ILogger<CatalogController> _logger;
+    private readonly ICorrelationIdGenerator _correlationIdGenerator;
 
-    public CatalogController(IMediator mediator, ILogger<CatalogController> logger)
+    public CatalogController(IMediator mediator, ILogger<CatalogController> logger,ICorrelationIdGenerator correlationIdGenerator)
     {
         _mediator = mediator;
         _logger = logger;
+        _correlationIdGenerator = correlationIdGenerator;
+        _logger.LogInformation("CorrelationId {correlationId}:",_correlationIdGenerator.Get());
     }
 
     [HttpGet]

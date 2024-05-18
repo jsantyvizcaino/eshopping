@@ -2,6 +2,7 @@
 using Catalogo.Core.Repositories;
 using Catalogo.Infrestructure.Data;
 using Catalogo.Infrestructure.Repositories;
+using Common.Logging.Correlation;
 using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -34,6 +35,7 @@ namespace Catalogo.API
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(CreateProductHandler).GetTypeInfo().Assembly);
+            services.AddScoped<ICorrelationIdGenerator, CorrelationIdGenerator>();
             services.AddScoped<ICatalogContext,CatalogContext>();
             services.AddScoped<IProductRepository,ProductRepository>();
             services.AddScoped<IBrandRepository, ProductRepository>();

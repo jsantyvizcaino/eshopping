@@ -1,4 +1,5 @@
-﻿using EventBus.Messages.Common;
+﻿using Common.Logging.Correlation;
+using EventBus.Messages.Common;
 using HealthChecks.UI.Client;
 using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -25,6 +26,7 @@ public class Startup
         services.AddControllers();
         services.AddApiVersioning();
         services.AddAplicationService();
+        services.AddScoped<ICorrelationIdGenerator, CorrelationIdGenerator>();
         services.AddIfraServices(Configuration);
         services.AddAutoMapper(typeof(Startup));
         services.AddScoped<BasketOrderingConsumer>();
