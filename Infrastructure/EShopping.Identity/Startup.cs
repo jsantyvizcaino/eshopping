@@ -2,13 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityServer4;
 using IdentityServerHost.Quickstart.UI;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace EShopping.Identity
 {
@@ -52,6 +47,16 @@ namespace EShopping.Identity
 
         public void Configure(IApplicationBuilder app)
         {
+            var forwardHeaderOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders= ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            };
+
+            forwardHeaderOptions.KnownNetworks.Clear();
+            forwardHeaderOptions.KnownProxies.Clear();
+
+            app.UseForwardedHeaders(forwardHeaderOptions);
+
             if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
