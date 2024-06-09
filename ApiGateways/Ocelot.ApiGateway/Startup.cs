@@ -10,6 +10,13 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddScoped<ICorrelationIdGenerator, CorrelationIdGenerator>();
+        services.AddCors(options =>
+        {
+            options.AddPolicy("CorsPolicy", policy =>
+            {
+                policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            });
+        });
         services.AddOcelot()
             .AddCacheManager(o => o.WithDictionaryHandle());
     }
@@ -22,6 +29,7 @@ public class Startup
         }
         app.AddCorrelationIdMiddleware();
         app.UseRouting();
+        app.UseCors("CorsPolicy");
         app.UseEndpoints(endpoints => {
             endpoints.MapGet("/", async context =>
             {
