@@ -5,13 +5,19 @@ This project is an ecommerce platform designed to provide a comprehensive soluti
 
 
 ## Table of Contents
-1. [Prerequisites](#prerequisites)
+1. [Installation](#installation)
 2. [Usage](#usage)
 3. [Contact](#contact)
 
+## Installation
 
+### Clone the Repository
+```bash
+git clone https://github.com/jsantyvizcaino/eshopping.git
+cd eshopping
+```
 
-## Prerequisites
+### Prerequisites
 - Docker
 - Docker Compose
 
@@ -21,6 +27,16 @@ Build and Start the Containers
 ```
 docker-compose -f ./docker-compose.yml -f ./docker-compose.override.yml up -d
 ```
+
+### Running the Angular Frontend
+To launch the Angular frontend, follow these steps:
+
+1. Change directory to the `client` folder:
+   ```bash
+   cd client
+   npm insatll
+   ng serve -o
+   ```
 
 ## Contact
 Contact information for questions and suggestions.
