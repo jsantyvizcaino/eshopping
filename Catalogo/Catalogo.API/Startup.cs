@@ -48,27 +48,27 @@ namespace Catalogo.API
             services.AddScoped<ITypesRepository, ProductRepository>();
 
             services.AddControllers();
-            //Identity Server changes
-            // var userPolicy = new AuthorizationPolicyBuilder()
-            //     .RequireAuthenticatedUser()
-            //     .Build();
-            //
-            // services.AddControllers(config =>
-            // {
-            //     config.Filters.Add(new AuthorizeFilter(userPolicy));
-            // });
-            //
-            //
-            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //         .AddJwtBearer(options =>
-            //         {
-            //             options.Authority = "https://localhost:9009";
-            //             options.Audience = "Catalog";
-            //         });
-            // services.AddAuthorization(options =>
-            // {
-            //     options.AddPolicy("CanRead", policy=>policy.RequireClaim("scope", "catalogapi.read"));
-            // });
+            //Identity
+             var userPolicy = new AuthorizationPolicyBuilder()
+                 .RequireAuthenticatedUser()
+                 .Build();
+
+            services.AddControllers(config =>
+            {
+                config.Filters.Add(new AuthorizeFilter(userPolicy));
+            });
+
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.Authority = "https://localhost:9009";
+                        options.Audience = "Catalog";
+                    });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("CanRead", policy => policy.RequireClaim("scope", "catalogapi.read"));
+            });
 
 
 

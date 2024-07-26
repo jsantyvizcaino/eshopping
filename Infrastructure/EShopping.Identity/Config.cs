@@ -45,7 +45,7 @@ namespace EShopping.Identity
                 {
                     //machine to machine flow
                     Scopes={ "eshoppingGateway" }
-                },
+                }
             };
 
         public static IEnumerable<Client> Clients =>
