@@ -3,7 +3,7 @@
 ## Description
 This project is an ecommerce platform designed to provide a comprehensive solution for online shopping. It includes features such as product listings, shopping cart, checkout, and user management. The platform is built with .NET and utilizes Docker for containerization. The frontend is developed using Angular, providing a dynamic and responsive user interface.
 
-
+![alt text](image.png)
 ## Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
