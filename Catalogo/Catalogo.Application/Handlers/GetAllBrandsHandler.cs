@@ -1,5 +1,4 @@
-﻿
-using Catalogo.Application.Mappers;
+﻿using Catalogo.Application.Mappers;
 using Catalogo.Application.Queries;
 using Catalogo.Application.Responses;
 using Catalogo.Core.Repositories;

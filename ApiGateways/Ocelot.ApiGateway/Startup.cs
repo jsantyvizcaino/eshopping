@@ -1,4 +1,5 @@
 ﻿using Common.Logging.Correlation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ocelot.Cache.CacheManager;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -17,6 +18,18 @@ public class Startup
                 policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
             });
         });
+        //var authScheme = "EShoppingGatewayAuthScheme";
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        // .AddJwtBearer(authScheme, options =>
+        // {
+        //     options.Authority = "https://localhost:9009";
+        //     options.Audience = "EShoppingGateway";
+        // });
+             .AddJwtBearer(options =>
+             {
+                 options.Authority = "https://localhost:9009";
+                 options.Audience = "EShoppingGateway";
+             });
         services.AddOcelot()
             .AddCacheManager(o => o.WithDictionaryHandle());
     }
