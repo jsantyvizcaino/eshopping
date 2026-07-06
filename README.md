@@ -1,46 +1,33 @@
-# Eshoping - microservices
+# EShopping - Microservices E-Commerce Platform
 
-## Description
-This project is an ecommerce platform designed to provide a comprehensive solution for online shopping. It includes features such as product listings, shopping cart, checkout, and user management. The platform is built with .NET and utilizes Docker for containerization. The frontend is developed using Angular, providing a dynamic and responsive user interface.
+## Overview
+Microservices-based e-commerce platform demonstrating **Ocelot API Gateway**, distributed architecture, and Docker containerization.
 
-![alt text](image.png)
-## Table of Contents
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Contact](#contact)
+**Stack:** .NET 6/7, Ocelot, Entity Framework Core, Angular, SQL Server, Docker
 
-## Installation
+## Architecture
+- **API Gateway** (Ocelot) - Routes & orchestrates requests
+- **Catalog Service** - Product management
+- **Order Service** - Order processing
+- **Infrastructure** - Shared utilities, logging, middleware
 
-### Clone the Repository
+## Tech Highlights
+- Clean Architecture principles
+- Microservices pattern with API Gateway
+- Docker Compose multi-container orchestration
+- Entity Framework Core for data access
+- Angular frontend with responsive design
+
+## Quick Start
 ```bash
-git clone https://github.com/jsantyvizcaino/eshopping.git
-cd eshopping
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+cd client && npm install && ng serve
 ```
 
-### Prerequisites
-- Docker
-- Docker Compose
+## What I Built
+- Distributed service architecture
+- API Gateway with request routing
+- Docker containerization for development
+- Full-stack .NET + Angular integration
 
-## Usage
-
-Build and Start the Containers
-```
-docker-compose -f ./docker-compose.yml -f ./docker-compose.override.yml up -d
-```
-
-### Running the Angular Frontend
-To launch the Angular frontend, follow these steps:
-
-1. Change directory to the `client` folder:
-   ```bash
-   cd client
-   npm insatll
-   ng serve -o
-   ```
-
-## Contact
-Contact information for questions and suggestions.
-
-- Name: Santiago Vizcaíno
-- Email: jorge_santiagovizcaino@hotmail.com
-- LinkedIn: [www.linkedin.com/in/santiago-vizcaino](https://www.linkedin.com/in/santiago-vizcaino)
+**Note:** This project was developed following architectural best practices for microservices learning.
